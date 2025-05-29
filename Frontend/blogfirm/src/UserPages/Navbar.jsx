@@ -9,19 +9,26 @@ function Navbar() {
   const [username, setUsername] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
 
+
+
+//handler for getting the user name
   async function getuser() {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/user", { withCredentials: true });
+      const res = await axios.get("http://localhost:4000/api/v1/users", { withCredentials: true });
       setUsername(res.data.data.username);
     } catch (err) {
-      toast.error("Something went wrong while fetching user");
+      toast.error(err.response?.data?.message||"Something went wrong while fetching user");
     }
   }
+
+
 
   useEffect(() => {
     getuser();
   }, []);
 
+
+  //handler for logout
   const logout = async () => {
     try {
       await axios.post("http://localhost:4000/api/v1/users/logout", {}, { withCredentials: true });
@@ -30,8 +37,8 @@ function Navbar() {
     setTimeout(() => {
         navigate("/")
     }, 3000);
-    } catch (error) {
-      console.error("Logout failed", error);
+    } catch (err) {  toast.error(err.response?.data?.message||"Log out failed");
+    
     }
   };
 
@@ -40,9 +47,9 @@ function Navbar() {
       <ToastContainer position="top-center" />
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         
-        {/* Left: Navigation + Hamburger */}
+        
         <div className="flex items-center gap-4">
-          {/* Hamburger - shown on small screens */}
+      
           <button 
             className="text-white md:hidden" 
             onClick={() => setMenuOpen(!menuOpen)}
@@ -50,7 +57,7 @@ function Navbar() {
             {menuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
 
-          {/* Nav Links - hidden on small screens */}
+          
        <ul className="hidden md:flex gap-6 text-white font-medium text-lg">
   <li
     className="cursor-pointer px-2 py-1 rounded-lg transition duration-200 hover:bg-white hover:text-[#dab74e] hover:scale-105"
@@ -72,14 +79,14 @@ function Navbar() {
   </li>
   <li
     className="cursor-pointer px-2 py-1 rounded-lg transition duration-200 hover:bg-white hover:text-[#dab74e] hover:scale-105"
-    onClick={() => navigate("/Home/publish")}
+    onClick={() => navigate("/Home/create")}
   >
     Create a Blog
   </li>
 </ul>
         </div>
 
-        {/* Right: Username & Logout */}
+  
         <div className="flex items-center gap-4">
           <span className="text-white font-semibold text-sm sm:text-base">👋Hi {username}</span>
           <button
@@ -91,13 +98,13 @@ function Navbar() {
         </div>
       </div>
 
-      {/* Dropdown Menu for Small Screens */}
+
       {menuOpen && (
         <div className="md:hidden bg-[#dab74e] px-6 py-3 space-y-3 text-white text-lg font-medium shadow-md">
           <div className="cursor-pointer hover:underline" onClick={() => { navigate("/Home/blog"); setMenuOpen(false); }}>All Blogs</div>
           <div className="cursor-pointer hover:underline" onClick={() => { navigate("/Home/draft"); setMenuOpen(false); }}>Drafts</div>
           <div className="cursor-pointer hover:underline" onClick={() => { navigate("/Home/userpost"); setMenuOpen(false); }}>Posted</div>
-          <div className="cursor-pointer hover:underline" onClick={() => { navigate("/Home/publish"); setMenuOpen(false); }}>Create a Blog</div>
+          <div className="cursor-pointer hover:underline" onClick={() => { navigate("/Home/create"); setMenuOpen(false); }}>Create a Blog</div>
         </div>
       )}
     </div>

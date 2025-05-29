@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,19 +10,26 @@ function Mainblog() {
   const [blogs, setBlogs] = useState([]);
   const [search, setSearch] = useState('');
 
+
+  //geting the all blogs
   const getPublish = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/v1/blog/", { withCredentials: true });
       setBlogs(res.data.data.slice(0, 10));
     } catch (err) {
-      toast.error("Something went wrong while fetching your posts");
+      toast.error(err.response?.data?.message||"Something went wrong while fetching  posts");
     }
   };
+
+
 
   useEffect(() => {
     getPublish();
   }, [search]);
 
+
+
+//handler for searching a blog using title
 const getbytitle = async () => {
   try {
     const res = await axios.get(
@@ -34,16 +41,17 @@ const getbytitle = async () => {
     );
     setBlogs(res.data.data);
   } catch (err) {
-    toast.error("Something went wrong while fetching posts");
+    console.log(err.response?.data?.message||"Something went wrong")
   }
 };
+
 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 to-white pb-12">
       <ToastContainer position='top-center' />
 
-      {/* Banner */}
+      {/* Intro section */}
       <motion.div
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -51,7 +59,7 @@ const getbytitle = async () => {
         className="relative w-full bg-[#dab74e] mb-8 shadow-lg px-4 py-10"
       >
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-          {/* Text */}
+          
           <motion.div
             initial={{ x: -100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -63,7 +71,7 @@ const getbytitle = async () => {
             Search and explore amazing posts.
           </motion.div>
 
-          {/* Image */}
+        
           <motion.div
             initial={{ x: 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -101,7 +109,7 @@ const getbytitle = async () => {
         </motion.div>
       </motion.div>
 
-      {/* Heading */}
+  
       <h2 className="text-center text-2xl font-semibold text-orange-600 mb-6 drop-shadow-sm">
         Blogs to Read
       </h2>

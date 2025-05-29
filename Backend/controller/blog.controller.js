@@ -34,13 +34,19 @@ const createblog = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { blog }, "Blog published successfully"));
 });
 
-//autosave and save and edit draft
+
+
+
+
+
+
+// saving draft
 
 const saveblog = asyncHandler(async (req, res) => {
   const { title, content, tags } = req.body;
 
   if (!title?.trim() ) {
-    throw new ApiError(400, "Title are required");
+    throw new ApiError(400, "Title is required");
   }
 
   let blog = await Blog.findOne({ user: req.user.email, title:{ $regex: title, $options: 'i' }, status: "autodraft" });
@@ -65,6 +71,9 @@ const saveblog = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { blog }, "Blog saved as draft"));
 });
 
+
+
+//autosaving draft
 
 const autosaveblog = asyncHandler(async (req, res) => {
   const { title, content, tags } = req.body;
@@ -101,6 +110,14 @@ const autosaveblog = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { blog }, "Autosave successful"));
 });
 
+
+
+
+
+
+
+//re drafting controller for editing a draft
+
 const redraft = asyncHandler(async (req,res) => {
     
 const {title,content,tags,id} =req.body
@@ -120,7 +137,7 @@ const updatedBlog = await Blog.findOneAndUpdate(
 );
 
 if (!updatedBlog) {
-  throw new ApiError(404, "Drafted blog not found");
+  throw new ApiError(500, "Drafted blog not found");
 }
 
 
@@ -132,19 +149,7 @@ return res.status(200).json( new ApiResponse(200,"Blog re-drafted"))
 else{ return res.status(400).json( new ApiError(400,"No existing draft available"))}
 
 
-
-
 })
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,7 +175,7 @@ const updatedBlog = await Blog.findOneAndUpdate(
 );
 
 if (!updatedBlog) {
-  throw new ApiError(404, "Published blog not found");
+  throw new ApiError(500, "Published blog not found");
 }
 
 
@@ -209,6 +214,8 @@ return res.status(200).json(new ApiResponse(200,blogs,"Blogs Fetched"))
 })
 
 
+
+
 //geting user published blogs
 const userpublishedblog = asyncHandler(async (req,res) => {
     const blogs = await Blog.find({user:req.user.email,status:"published"})
@@ -221,6 +228,9 @@ if(blogs.length === 0){
 return res.status(200).json(new ApiResponse(200,blogs,"Blogs Fetched"))
 
 })
+
+
+
 
 
 //getting user drafted blogs
@@ -240,10 +250,10 @@ return res.status(200).json(new ApiResponse(200,blogs,"Blogs Fetched"))
 })
 
 
-//getting specific blog by slug
 
+//deleting autosaved draft controller
 const deleteautodraft = asyncHandler(async (req, res) => {
-  // Calculate time 10 minutes ago
+  
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
 
   
@@ -253,18 +263,13 @@ const deleteautodraft = asyncHandler(async (req, res) => {
     createdAt: { $lt: tenMinutesAgo }
   });
 
-  return res.status(200).json(new ApiResponse(200, "Old autodrafts deleted successfully"));
+  return res.status(200).json(new ApiResponse(200, "Recent autodrafts deleted successfully"));
 });
 
 
 
 
-
-
-
-
-
-
+//deleledraft controller
 const deletedraft = asyncHandler(async (req,res) => {
   const {id} = req.body;
 
@@ -283,6 +288,7 @@ return res.status(200).json( new ApiResponse(200,"Draft deleted"))
 
 
 
+//delelepost controller
 const deletepost = asyncHandler(async (req,res) => {
   const {id} = req.body;
 
@@ -301,6 +307,9 @@ return res.status(200).json( new ApiResponse(200,"Post deleted"))
 
 
 
+
+
+//controller for searching blogs
 const getblogbytitle = asyncHandler(async (req,res) => {
   
 const {title} = req.query;
@@ -325,4 +334,16 @@ return res.status(200).json( new ApiResponse(200,blogs,"Blogs Fetched"))
 
 
 
-export {getblogbytitle,createblog,saveblog,republish,getallblogs,userdraftedblog,userpublishedblog,autosaveblog,redraft,deleteautodraft,deletedraft,deletepost}
+
+export {getblogbytitle,
+  createblog,
+  saveblog,
+  republish,
+  getallblogs,
+  userdraftedblog,
+  userpublishedblog,
+  autosaveblog,
+  redraft,
+  deleteautodraft,
+  deletedraft,
+  deletepost}

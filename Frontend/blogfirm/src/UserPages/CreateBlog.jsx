@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import { useEffect } from 'react';
-import { X } from 'lucide-react'; 
+import { X } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-export default function Publish({onClose, etitle="",econtent="",etags=[]}) {
+export default function Publish() {
   const [isOpen, setIsOpen] = useState(true);
-  const [title, setTitle] = useState(etitle);
-  const [content, setContent] = useState(econtent);
   const [tagInput, setTagInput] = useState('');
-  const [tags, setTags] = useState(etags);
+  const [title,setTitle]=useState("")
+  const [content,setContent]=useState("")
+  const [tags, setTags] = useState([]);
   const navigate = useNavigate();
-let savecount =0;
-let publishcount =0;
+  let savecount = 0;
+  let publishcount = 0;
 
 
   //adding tags
@@ -33,18 +33,18 @@ let publishcount =0;
 
 
   //for saving draft
-  const handleSaveDraft =async  () => {
-const data ={title,content,tags}
+  const handleSaveDraft = async () => {
+    const data = { title, content, tags }
 
-  await   axios.post("http://localhost:4000/api/v1/blog/save", data, { withCredentials: true })
+    await axios.post("http://localhost:4000/api/v1/blog/save", data, { withCredentials: true })
       .then((res) => {
-    toast.success("Blog Drafted")
-    savecount++;
-        setTitle();
+        toast.success("Blog Drafted")
+        savecount++;
+        setTitle("");
         setContent("");
-      setTags([]);
+        setTags([]);
 
-     
+
       })
       .catch((err) => {
         toast.error(err.response?.data?.message || "An unknown error occurred");
@@ -59,17 +59,17 @@ const data ={title,content,tags}
 
 
   //publishing blog function
-  const handlePublish =async () => {
-const data ={title,content,tags}
-   await axios.post("http://localhost:4000/api/v1/blog/publish", data, { withCredentials: true })
+  const handlePublish = async () => {
+    const data = { title, content, tags }
+    await axios.post("http://localhost:4000/api/v1/blog/create", data, { withCredentials: true })
       .then((res) => {
-    toast.success("Blog Published")
-    publishcount++;
+        toast.success("Blog Published")
+        publishcount++;
         setTitle("");
         setContent("");
-      setTags([]);
+        setTags([]);
 
-     
+
       })
       .catch((err) => {
         toast.error(err.response?.data?.message || "An unknown error occurred");
@@ -83,49 +83,56 @@ const data ={title,content,tags}
 
 
   //autosave function
-const autosave = async () => {
-    const data ={title,content,tags}
+  const autosave = async () => {
+    const data = { title, content, tags }
 
-   await axios.post("http://localhost:4000/api/v1/blog/autosave", data, { withCredentials: true })
+    await axios.post("http://localhost:4000/api/v1/blog/autosave", data, { withCredentials: true })
       .then((res) => {
-    toast.success("Blog Auto-Saved in Draft")
-      
-     
-     
+        toast.success("Blog Auto-Saved in Draft")
+
+
+
       })
- 
-    }
 
-
-
-
-useEffect(() => {
-  let interval;
-
-  if (isOpen && title && content) {
-    interval = setInterval(() => {
-      autosave();
-    }, 5000);
   }
 
-  return () => {
-    if (interval) clearInterval(interval);
-  };
-}, [isOpen, title,content]);
-
-const handleautodraftdelete= async (params) => {
-    
-if(savecount==0&&publishcount==0){  await axios.post("http://localhost:4000/api/v1/blog/autodraftdelete",{}, { withCredentials: true })
-      .then((res) => {
- })}
- 
- else{return null}
-}
 
 
+//autosave when user is in inactivity after 5 secs
+  useEffect(() => {
+    let interval;
+
+    if (isOpen && title && content) {
+      interval = setInterval(() => {
+        autosave();
+      }, 5000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isOpen, title, content]);
 
 
-const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");} 
+
+
+
+// autodelete of  auto saved draft if user did not publish or save it to draft 
+  const handleautodraftdelete = async (params) => {
+
+    if (savecount == 0 && publishcount == 0) {
+      await axios.post("http://localhost:4000/api/v1/blog/autodraftdelete", {}, { withCredentials: true })
+        .then((res) => {
+        })
+    }
+
+    else { return null }
+  }
+
+
+
+//handling of closing of publish tab
+  const closeModal = () => { handleautodraftdelete(); navigate("/Home/blog"); }
 
 
 
@@ -136,16 +143,16 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 ">
-        <ToastContainer position='top-center'/>
+      <ToastContainer position='top-center' />
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 relative bg-gradient-to-b from-yellow-100">
-        
-          
+
+
         <button
           onClick={closeModal}
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
         >
           <X size={24} />
-        </button>   
+        </button>
 
 
 
@@ -153,7 +160,7 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
 
 
 
-          
+
 
 
         <input
@@ -166,7 +173,7 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
 
 
 
-        
+
         <textarea
           placeholder="Content of blog"
           rows={5}
@@ -177,7 +184,7 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
 
 
 
-  
+
         <div className="mb-4">
           <div className="flex gap-2 mb-2">
             <input
@@ -195,7 +202,7 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
               Add
             </button>
           </div>
- 
+
 
 
           <div className="flex flex-wrap gap-2">
@@ -216,14 +223,14 @@ const closeModal = () =>{ handleautodraftdelete();navigate("/Home/blog");}
           </div>
         </div>
 
-      
+
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={handleSaveDraft}
             className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-yellow-100"
           >
             Save to Draft
-          </button>  
+          </button>
 
 
 

@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
-import { Outlet ,useNavigate,useLocation} from "react-router"
+import { useNavigate,useLocation} from "react-router"
 import ReDraft from './ReDraft';
 
 export default function Draft() {
   const [blogs, setBlogs] = useState([]);
-
   const [edit,setEdit] = useState(false)
-
-const [selectedBlog, setSelectedBlog] = useState(null);
-
+  const [selectedBlog, setSelectedBlog] = useState(null);// selecting blog for deleting
 
 
 
 
+//for routing to edit blog form
   const location = useLocation();
   const navigate = useNavigate();
-  const blogToEdit = location.state?.blog;
+  const blogToEdit = location.state?.blog; // received blog to edit
+   const isdraft = location.pathname.endsWith("/edit");
 
-  const isdraft = location.pathname.endsWith("/edit");
 
+   // for closing the edit pop up
   const closeModal = () => {navigate("/Home/draft"); getDraft()};
 
+  //for deleting draft
  const deletedraft = async (id) => {
     try {
       const res = await axios.post("http://localhost:4000/api/v1/blog/deletedraft",{id}, {
@@ -37,6 +37,8 @@ const [selectedBlog, setSelectedBlog] = useState(null);
     }
  } 
   
+
+ //publish handler if user want to post the darft
 const handlePublish = async (blog) => {
   if (!blog) return;
 
@@ -47,7 +49,7 @@ const handlePublish = async (blog) => {
   };
 
   try {
-    await axios.post("http://localhost:4000/api/v1/blog/publish", data, { withCredentials: true });
+    await axios.post("http://localhost:4000/api/v1/blog/create", data, { withCredentials: true });
     toast.success("Blog Published");
     getDraft(); // refresh draft list
   } catch (err) {
@@ -71,7 +73,12 @@ const handlePublish = async (blog) => {
     getDraft();
   }, []);
 
-  // === Animation Variants ===
+  // for animation varitants
+
+
+
+
+
   const headingContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -113,6 +120,9 @@ const handlePublish = async (blog) => {
 
   const headingText = "📝 Your Draft Blogs";
 
+
+
+
   return (
     <div className="bg-gradient-to-b from-yellow-100 to-white min-h-screen py-10 px-4 sm:px-10">
       <ToastContainer position="top-center" />
@@ -130,6 +140,9 @@ const handlePublish = async (blog) => {
           </motion.span>
         ))}
       </motion.h1>
+
+
+
 
       {blogs.length === 0 ? (
         <motion.p
@@ -220,7 +233,7 @@ const handlePublish = async (blog) => {
         </motion.div>
       )}
 
-
+{/* for routing to edit pop-up*/}
  {isdraft && blogToEdit && (
   <ReDraft
     onClose={closeModal}

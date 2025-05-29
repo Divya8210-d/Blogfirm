@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect } from 'react';
 import { X } from 'lucide-react'; 
 
-export default function RePublish({onClose, onSave ,etitle="",econtent="",etags=[],eid=""}) {
+export default function RePublish({onClose, etitle="",econtent="",etags=[],eid=""}) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState(etitle);
-    const [id, setId] = useState(eid);
+  const [id, setId] = useState(eid);
   const [content, setContent] = useState(econtent);
   const [tagInput, setTagInput] = useState('');
   const [tags, setTags] = useState(etags);
@@ -50,13 +49,6 @@ const data ={title,content,tags,id}
 
 
   };
-
-
-  //autosave function
-
-
-//auot calling autosave function
-
 
   if (!isOpen) return null;
 

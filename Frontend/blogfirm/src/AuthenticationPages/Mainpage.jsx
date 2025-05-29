@@ -2,11 +2,13 @@ import Auth from "./Auth.jsx";
 import blogperson from "./blogperson.png";
 import { motion } from "framer-motion";
 
+
 function Main() {
+
   return (
     <div
   className="bg-[#dab74e] min-h-screen relative font-sans  ">
-      {/* Background words */}
+  
 <motion.h1       initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 0.3, y: 0 }}
         transition={{ duration: 1 }} className="absolute top-[18%] md:top-[20%] lg:top-[10%] left-[50%] md:left-[40%] lg:left-[60%] 
@@ -31,9 +33,9 @@ function Main() {
   Idea
 </motion.h1>
 
-      {/* Main content container */}
+{/* Page title */}
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between px-6 lg:px-20 py-20 gap-12 lg:gap-0">
-        {/* Left side: Title and description */}
+     
         <div className="text-white flex flex-col gap-4 max-w-xl">
           <motion.h1       initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,13 +50,19 @@ function Main() {
           </motion.p>
         </div>
 
-        {/* Right side: Auth */}
+
+
+
+        {/* Right side: Auth component */}
         <div className="w-full max-w-sm z-10">
           <Auth />
         </div>
       </div>
 
-      {/* Blog person image at the bottom */}
+      
+
+
+
     {/* Blog person image */}
 <motion.div         initial={{ opacity: 0,  }}
         animate={{ opacity: 1,  }}
@@ -63,6 +71,9 @@ function Main() {
 </motion.div>
 
     </div>
+
+
+
   );
 }
 

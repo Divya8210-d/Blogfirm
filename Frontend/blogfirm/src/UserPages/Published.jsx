@@ -1,28 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
-import { Outlet ,useNavigate,useLocation} from "react-router"
+import { useNavigate,useLocation} from "react-router"
 import RePublish from './RePublish';
 
 
 export default function Published() {
   const [blogs, setBlogs] = useState([]);
-    
-    const [edit,setEdit] = useState(false)
-  
-      const [selectedBlog, setSelectedBlog] = useState(null);
+  const [edit,setEdit] = useState(false)
+  const [selectedBlog, setSelectedBlog] = useState(null);
 
-  
+  //for checking the edit rout of edit popup
     const location = useLocation();
     const navigate = useNavigate();
-   const blogToEdit = location.state?.blog;
+    const blogToEdit = location.state?.blog;
     const ispublish = location.pathname.endsWith("/edit");
   
     const closeModal = () => {navigate("/Home/userpost") ;getPublish()};
   
- const deletepublish = async (id) => {
+
+    //handler for deleting post
+    const deletepublish = async (id) => {
     try {
       const res = await axios.post("http://localhost:4000/api/v1/blog/deletepost",{id}, {
         withCredentials: true
@@ -30,12 +30,12 @@ export default function Published() {
       toast.success("Post deleted")
          getPublish();
     } catch (err) {
-      toast.error("Something went wrong while deleting your post");
+      toast.error(err.response?.data?.message||"Something went wrong while deleting your post");
     }
  } 
   
 
-
+//handler for getting all user posts
   const getPublish = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/v1/blog/userpublish", {
@@ -43,15 +43,19 @@ export default function Published() {
       });
       setBlogs(res.data.data);
     } catch (err) {
-      toast.error("Something went wrong while fetching your posts");
+      toast.error(err.response?.data?.message||"Something went wrong while fetching your posts");
     }
   };
+
+
 
   useEffect(() => {
     getPublish();
   }, []);
 
-  // === Animation Variants ===
+
+
+  //for  Animation Variants
   const headingContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -97,7 +101,6 @@ export default function Published() {
     <div className="bg-gradient-to-br from-yellow-100 to-white min-h-screen py-10 px-4 sm:px-10">
       <ToastContainer position="top-center" />
 
-      {/* Animated Heading */}
       <motion.h1
         className="text-4xl font-bold text-center text-gray-800 mb-10"
         variants={headingContainer}
@@ -196,7 +199,9 @@ export default function Published() {
           ))}
         </motion.div>
       )}
+  
 
+  {/*for opening the republish pop-up */}
  {ispublish && blogToEdit && (
   <RePublish
     onClose={closeModal}

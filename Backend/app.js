@@ -4,19 +4,13 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-
-
+import userRoutes from './routes/user.routes.js';
+import blogRoutes from './routes/blog.routes.js';
 
 const app = express();
 
-//middlewares
 
-
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5174', // in case frontend picks next port
-  // Add more if needed
-];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -29,15 +23,25 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true, limit: "16kb"}))
-app.use(express.static("public"))
-app.use(cookieParser())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.static("public"));
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/blog", blogRoutes);
 
-export default app
 
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  return res.status(statusCode).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+    errors: err.errors || [],
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
+  });
+});
 
-
+export default app;

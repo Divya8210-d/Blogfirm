@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect } from 'react';
 import { X } from 'lucide-react'; 
-import { Outlet ,useNavigate,useLocation} from "react-router"
+
 
 export default function ReDraft({onClose, etitle="",econtent="",etags=[],eid=""}) {
   const [isOpen, setIsOpen] = useState(true);
   const [title, setTitle] = useState(etitle);
-    const [id, setId] = useState(eid);
+  const [id, setId] = useState(eid);
   const [content, setContent] = useState(econtent);
   const [tagInput, setTagInput] = useState('');
   const [tags, setTags] = useState(etags);
@@ -29,7 +28,6 @@ export default function ReDraft({onClose, etitle="",econtent="",etags=[],eid=""}
   };
 
 
-//git remote add origin https://github.com/Divya8210-d/Blogfirm.git
   //for saving draft
   const handleSaveDraft =async  () => {
 const data ={title,content,tags,id}
@@ -37,30 +35,13 @@ const data ={title,content,tags,id}
   await   axios.post("http://localhost:4000/api/v1/blog/redraft", data, { withCredentials: true })
       .then((res) => {
     toast.success("Blog Edited")
-    
-
      
       })
       .catch((err) => {
         toast.error(err.response?.data?.message || "An unknown error occurred");
       });
 
-
-
-
-
-
   };
-
-
-
-
-
-
-  //autosave function
-
-
-//auot calling autosave function
 
 
   if (!isOpen) return null;

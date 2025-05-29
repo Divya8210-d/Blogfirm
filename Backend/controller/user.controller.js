@@ -4,12 +4,10 @@ import { ApiResponse } from "../utils/ApiResponse.js"
 import asyncHandler from "../utils/asynchandler.js"
 
 
-
+//register user controller
 const register = asyncHandler(async (req, res) => {
 
-
-
-    const { username, email, password } = req.body
+     const { username, email, password } = req.body
 
 
     if (username == "") {
@@ -27,12 +25,10 @@ const register = asyncHandler(async (req, res) => {
 
 
     if (alreadyuser) {
-        return res.status(400).json({message:"USER alreday exists"})
+        return res.status(400).json({message:"USER alreADY exists"})
     }
 
-
-
-    const userDetail = await User.create({
+  const userDetail = await User.create({
         username,
         email,
         password,
@@ -81,6 +77,9 @@ return {accessToken,refreshToken}
 
 }
 
+
+
+//controller for logging in the user
 const login = asyncHandler(async (req, res) => {
 
 
@@ -94,7 +93,7 @@ const login = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Your password is required")
     }
 
-    const user = await User.findOne({ email: email })// $or: [{username}, {email}]
+    const user = await User.findOne({ email: email })
 
 
     if (!user) {
@@ -112,7 +111,7 @@ const login = asyncHandler(async (req, res) => {
 
     const loggedUser = await User.findById(user._id).select("-password -refreshToken")
 
-    const options = {      //for sending cookies secure mode false for development
+    const options = {     
         httpOnly: true,
         secure: false
     }
@@ -130,13 +129,15 @@ const login = asyncHandler(async (req, res) => {
 )
 
 
+
+//controller for logging out the user
 const logout = asyncHandler(async (req,res) => {
     
       await User.findByIdAndUpdate(
         req.user._id,
         {
             $unset: {
-                refreshToken: 1 // this removes the field from document
+                refreshToken: 1 
             }
         },
         {
@@ -161,7 +162,7 @@ const logout = asyncHandler(async (req,res) => {
 
 
 
-
+//getting the username of user
 const getuser = asyncHandler(async (req,res) => {
     
 

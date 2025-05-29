@@ -5,12 +5,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
-import Main from './AuthenticationPage/Mainpage';
-import Home from './UserPage/Home';
-import Draft from './UserPage/Draft';
-import Published from './UserPage/Published';
-import Publish from './UserPage/CreateBlog';
-import Mainblog from './UserPage/Main';
+import Main from './AuthenticationPages/Mainpage';
+import Home from './UserPages/Home';
+import Draft from './UserPages/Draft';
+import Published from './UserPages/Published';
+import Create from './UserPages/CreateBlog';
+import Mainblog from './UserPages/Main';
 
 
 const rout = createBrowserRouter([
@@ -41,8 +41,8 @@ const rout = createBrowserRouter([
   } ]
   },
     {
-    path: '/Home/publish',
-    element: <Publish/>,
+    path: '/Home/create',
+    element: <Create/>,
   } ,
 
     ],
