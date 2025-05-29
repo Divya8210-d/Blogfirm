@@ -58,55 +58,57 @@ Make sure you have the following installed:
 - **MongoDB** (cloud instance  MongoDB Atlas)
 - **npm**
 
-###  MongoDB Atlas Setup Instructions 
 
-1. Create an Account
-   
-   Visit mongodb.com/cloud/atlas and sign up
+##  MongoDB Atlas Setup Instructions
 
-2. Create a Cluster
+1. **Create an Account**
+   - Visit [mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas) and sign up.
 
-  - Click on "Build a Database"
-  -Choose Shared tier 
-  -Select your preferred cloud provider and region
-  -Click Create Cluster
+2. **Create a Cluster**
+   - Click on **"Build a Database"**
+   - Choose the **Shared Tier** (free)
+   - Select your preferred **cloud provider** and **region**
+   - Click **Create Cluster**
 
-3.Create a Database User
- -Go to Database Access in the sidebar
- -Click Add New Database User
- -Choose a username and password
- -Give them Read and Write access to any database
+3. **Create a Database User**
+   - Go to **Database Access** in the sidebar
+   - Click **Add New Database User**
+   - Set a **username** and **password**
+   - Give the user **Read and Write access** to any database
 
-4.Allow IP Access
- -Go to Network Access in the sidebar
- -Click Add IP Address
- -Choose Allow access from anywhere (0.0.0.0/0)
+4. **Allow IP Access**
+   - Go to **Network Access** in the sidebar
+   - Click **Add IP Address**
+   - Choose **Allow access from anywhere (0.0.0.0/0)**
 
- 5.Get Your Connection String
+5. **Get Your Connection String**
+   - Go to **Clusters → Connect → Connect your application**
+   - Copy the provided **connection string**
 
-  -Go to Clusters → Connect → Connect your application and Copy the connection string
-  
- 6.Update Your .env File
+6. **Update Your `.env` File**
+   - In your `Backend/.env` file, replace the placeholder with your actual **MongoDB connection string**
+   - Make sure to include your **username** and **password** in the URI
 
- - In your Backend/.env file, replace with your connection string
- - 
 
+ 
 ###  Backend Setup
 
-1. Navigate to the Backend folder:
+   1. Navigate to the Backend folder:
    
-   cd Backend
-2. Install dependencies:
+      - cd Backend
+   2. Install dependencies
    
-   npm install
+      - npm install
+
+    
    
-4. Create a .env file in the root of the Backend folder and add the details as given in env.sample.txt file in the same format with your credential
+   3. Create a .env file in the root of the Backend folder and add the details as given in env.sample.txt file in the same format with your credential
    
    
-5.Start the server
- 
-   npm run dev  
-   
+   4. Start the server
+
+      - npm run dev
+
 
 
 
@@ -114,37 +116,17 @@ Make sure you have the following installed:
 
 1. Navigate to the Frontend folder:
    
-   cd ./Frontend/blogfirm
+  - cd ./Frontend/blogfirm
    
 2. Install dependencies:
    
-   npm install
+  - npm install
 
 3. Start the React App
 
-   npm run dev
+  - npm run dev
 
-Visit the React app locally by clicking on the localhost link in your terminal
-
- ### Project Structure
-
-Blogfirm/
-├── Backend/
-│   ├── controller/
-│   ├── db/
-│   ├── utils/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── server.js
-│   ├── env.sample.txt
-├── Frontend/blogfirm/
-│   ├── src/
-│   │   ├── AuthenticationPages/
-│   │   ├── Userpages/
-│   │   ├── App.js
-│   │   └── main.js
-└── README.md
+**Visit the React app locally by clicking on the localhost link in your terminal**
 
 
 
