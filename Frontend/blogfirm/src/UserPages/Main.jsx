@@ -41,7 +41,7 @@ const getbytitle = async () => {
     );
     setBlogs(res.data.data);
   } catch (err) {
-    console.log(err.response?.data?.message||"Something went wrong")
+    toast.error(err.response?.data?.message||"Something went wrong")
   }
 };
 
