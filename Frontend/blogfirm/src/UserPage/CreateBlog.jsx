@@ -105,7 +105,7 @@ useEffect(() => {
   if (isOpen && title && content) {
     interval = setInterval(() => {
       autosave();
-    }, 15000);
+    }, 5000);
   }
 
   return () => {
