@@ -323,7 +323,7 @@ const blogs =await  Blog.find({title:{ $regex: title, $options: 'i' } ,status:"p
 
 
 if(blogs.length==0){
-  throw new ApiError(500,"No blogs founds")
+  throw new ApiError(500,"No blogs found")
 }
 return res.status(200).json( new ApiResponse(200,blogs,"Blogs Fetched"))
 

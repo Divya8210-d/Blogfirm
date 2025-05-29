@@ -111,7 +111,7 @@ export default function Publish() {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isOpen, title, content]);
+  }, [isOpen, title, content,tagInput]);
 
 
 
