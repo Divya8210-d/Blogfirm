@@ -10,7 +10,7 @@ import blogRoutes from './routes/blog.routes.js';
 const app = express();
 
 
-const allowedOrigins = ['https://blogfirm.vercel.app/'];
+const allowedOrigins = ['https://blogfirm.vercel.app'];
 
 app.use(cors({
   origin: function (origin, callback) {
