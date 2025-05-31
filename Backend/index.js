@@ -1,16 +1,15 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import app from './app.js';
-import cookieParser from "cookie-parser";
 import connectDB from './db/connect.js';
-import verify from './middlewares/auth.midleware.js';
-import { getuser, login, logout, register } from './controller/user.controller.js';
-import { autosaveblog, createblog, deleteautodraft, deletedraft, deletepost, getallblogs,  getblogbytitle,  redraft, republish, saveblog, userdraftedblog, userpublishedblog } from './controller/blog.controller.js';
+import path from 'path';
+
+const _dirname = path.resolve()
 
 
 connectDB()
 .then(() => {
-    app.listen(4000, () => {
+    app.listen(process.env.PORT, () => {
         console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
     })
 })
