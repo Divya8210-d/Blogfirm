@@ -14,7 +14,7 @@ function Navbar() {
 //handler for getting the user name
   async function getuser() {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/users", { withCredentials: true });
+      const res = await axios.get("https://blogfirm.onrender.com/api/v1/users", { withCredentials: true });
       setUsername(res.data.data.username);
     } catch (err) {
       toast.error(err.response?.data?.message||"Something went wrong while fetching user");
@@ -31,7 +31,7 @@ function Navbar() {
   //handler for logout
   const logout = async () => {
     try {
-      await axios.post("http://localhost:4000/api/v1/users/logout", {}, { withCredentials: true });
+      await axios.post("https://blogfirm.onrender.com/api/v1/users/logout", {}, { withCredentials: true });
       localStorage.removeItem("loggeduser");
       toast.success("Logged out")
     setTimeout(() => {

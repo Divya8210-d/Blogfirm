@@ -36,7 +36,7 @@ export default function RePublish({onClose, etitle="",econtent="",etags=[],eid="
   //publishing blog function
   const handlePublish =async () => {
 const data ={title,content,tags,id}
-   await axios.post("http://localhost:4000/api/v1/blog/republish", data, { withCredentials: true })
+   await axios.post("https://blogfirm.onrender.com/api/v1/blog/republish", data, { withCredentials: true })
       .then((res) => {
     toast.success("Blog Published")
      

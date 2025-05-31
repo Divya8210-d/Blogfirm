@@ -32,7 +32,7 @@ export default function ReDraft({onClose, etitle="",econtent="",etags=[],eid=""}
   const handleSaveDraft =async  () => {
 const data ={title,content,tags,id}
 
-  await   axios.post("http://localhost:4000/api/v1/blog/redraft", data, { withCredentials: true })
+  await   axios.post("https://blogfirm.onrender.com/api/v1/blog/redraft", data, { withCredentials: true })
       .then((res) => {
     toast.success("Blog Edited")
      

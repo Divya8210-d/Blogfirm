@@ -36,7 +36,7 @@ export default function Publish() {
   const handleSaveDraft = async () => {
     const data = { title, content, tags }
 
-    await axios.post("http://localhost:4000/api/v1/blog/save", data, { withCredentials: true })
+    await axios.post("https://blogfirm.onrender.com/api/v1/blog/save", data, { withCredentials: true })
       .then((res) => {
         toast.success("Blog Drafted")
         savecount++;
@@ -61,7 +61,7 @@ export default function Publish() {
   //publishing blog function
   const handlePublish = async () => {
     const data = { title, content, tags }
-    await axios.post("http://localhost:4000/api/v1/blog/create", data, { withCredentials: true })
+    await axios.post("https://blogfirm.onrender.com/api/v1/blog/create", data, { withCredentials: true })
       .then((res) => {
         toast.success("Blog Published")
         publishcount++;
@@ -86,7 +86,7 @@ export default function Publish() {
   const autosave = async () => {
     const data = { title, content, tags }
 
-    await axios.post("http://localhost:4000/api/v1/blog/autosave", data, { withCredentials: true })
+    await axios.post("https://blogfirm.onrender.com/api/v1/blog/autosave", data, { withCredentials: true })
       .then((res) => {
         toast.success("Blog Auto-Saved in Draft")
 
@@ -121,7 +121,7 @@ export default function Publish() {
   const handleautodraftdelete = async (params) => {
 
     if (savecount == 0 && publishcount == 0) {
-      await axios.post("http://localhost:4000/api/v1/blog/autodraftdelete", {}, { withCredentials: true })
+      await axios.post("https://blogfirm.onrender.com/api/v1/blog/autodraftdelete", {}, { withCredentials: true })
         .then((res) => {
         })
     }

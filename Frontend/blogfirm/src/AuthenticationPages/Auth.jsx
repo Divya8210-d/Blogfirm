@@ -91,7 +91,7 @@ const LoginForm = () => {
   const login = (e) => {
     e.preventDefault();
     const data = { email: lemail, password: lpassword };
-    axios.post("http://localhost:4000/api/v1/users/login", data, { withCredentials: true })
+    axios.post("https://blogfirm.onrender.com/api/v1/users/login", data, { withCredentials: true })
       .then((res) => {
         toast.success("Logged in")
         setLemail("");
@@ -134,7 +134,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
 
-    axios.post("http://localhost:4000/api/v1/users/register", data)
+    axios.post("https://blogfirm.onrender.com/api/v1/users/register", data)
       .then(() => {
         toast.success("Registered");
         setUsername(""); setRemail(""); setRpassword("");

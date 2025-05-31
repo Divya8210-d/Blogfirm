@@ -24,7 +24,7 @@ export default function Published() {
     //handler for deleting post
     const deletepublish = async (id) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/blog/deletepost",{id}, {
+      const res = await axios.post("https://blogfirm.onrender.com/api/v1/blog/deletepost",{id}, {
         withCredentials: true
       });
       toast.success("Post deleted")
@@ -38,7 +38,7 @@ export default function Published() {
 //handler for getting all user posts
   const getPublish = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/blog/userpublish", {
+      const res = await axios.get("https://blogfirm.onrender.com/api/v1/blog/userpublish", {
         withCredentials: true
       });
       setBlogs(res.data.data);

@@ -14,7 +14,7 @@ function Mainblog() {
   //geting the all blogs
   const getPublish = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/blog/", { withCredentials: true });
+      const res = await axios.get("https://blogfirm.onrender.com/api/v1/blog/", { withCredentials: true });
       setBlogs(res.data.data.slice(0, 10));
     } catch (err) {
       toast.error(err.response?.data?.message||"Something went wrong while fetching  posts");
@@ -33,7 +33,7 @@ function Mainblog() {
 const getbytitle = async () => {
   try {
     const res = await axios.get(
-      "http://localhost:4000/api/v1/blog/title",
+      "https://blogfirm.onrender.com/api/v1/blog/title",
       {
         params: { title: search }, 
         withCredentials: true,     

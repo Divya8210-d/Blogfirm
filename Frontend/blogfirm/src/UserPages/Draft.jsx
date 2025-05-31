@@ -27,7 +27,7 @@ export default function Draft() {
   //for deleting draft
  const deletedraft = async (id) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/blog/deletedraft",{id}, {
+      const res = await axios.post("https://blogfirm.onrender.com/api/v1/blog/deletedraft",{id}, {
         withCredentials: true
       });
       toast.success("Draft deleted")
@@ -49,7 +49,7 @@ const handlePublish = async (blog) => {
   };
 
   try {
-    await axios.post("http://localhost:4000/api/v1/blog/create", data, { withCredentials: true });
+    await axios.post("https://blogfirm.onrender.com/api/v1/blog/create", data, { withCredentials: true });
     toast.success("Blog Published");
     getDraft(); // refresh draft list
   } catch (err) {
@@ -60,7 +60,7 @@ const handlePublish = async (blog) => {
   
   const getDraft = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/v1/blog/userdraft", {
+      const res = await axios.get("https://blogfirm.onrender.com/api/v1/blog/userdraft", {
         withCredentials: true
       });
       setBlogs(res.data.data);
