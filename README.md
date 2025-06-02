@@ -91,7 +91,7 @@ Make sure you have the following installed:
 
 
  
-###  Backend Setup
+### 2.  Backend Setup
 
    1. Navigate to the Backend folder:
    
@@ -112,7 +112,7 @@ Make sure you have the following installed:
 
 
 
- ### Frontend Setup
+ ### 3. Frontend Setup
 
 1. Navigate to the Frontend folder:
    
